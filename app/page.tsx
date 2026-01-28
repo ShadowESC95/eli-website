@@ -4,7 +4,7 @@ export default function Home() {
       <div className="max-w-4xl mx-auto">
         <header className="py-12">
           <h1 className="text-6xl font-bold text-gray-900 mb-4">ELI</h1>
-          <p className="text-2xl text-gray-600 mb-2">Entropic Logical Interface</p>
+          <p className="text-2xl text-gray-600 mb-2">Enhanced Learning Interface</p>
           <p className="text-lg text-gray-500">Your local cognitive companion</p>
         </header>
         
