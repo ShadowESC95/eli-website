@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
+/* ELI's palette, taken from the mark itself (blueprints/Eli_Icon.png): a deep
+   navy-black canvas with a blue cast — not neutral black — and an electric cyan
+   ring fading to blue. Sampled values: canvas #001015, ring #00fefe -> #00d1fd,
+   wordmark #f8f9f9. The site should look like the icon it sits behind. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:        #00080b;
+  --bg-raise:  #00131a;
+  --bg-card:   #04141b;
+  --line:      #0d2b34;
+  --line-soft: #071e25;
+  --fg:        #f2f6f7;
+  --fg-dim:    #8fa5ab;
+  --fg-faint:  #5e777e;
+  --cyan:      #00fefe;
+  --blue:      #00d1fd;
+  --glow:      rgba(0, 209, 253, .16);
+  --danger:    #ff8a7a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hero backdrop: a faint grid that fades out, plus one warm bloom. Cheap, static,
+   no images, and it stops the page reading as a blank sheet. */
+.hero-bg {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.hero-bg::before {
+  content: ""; position: absolute; inset: -1px;
+  background-image:
+    linear-gradient(to right, var(--line-soft) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line-soft) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+.hero-bg::after {
+  content: ""; position: absolute; left: 50%; top: -280px;
+  width: 900px; height: 560px; transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, var(--glow), transparent 68%);
+  filter: blur(30px);
+}
+
+.rule { border-top: 1px solid var(--line); }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.card-hover { transition: border-color .18s ease, transform .18s ease; }
+.card-hover:hover { border-color: var(--blue); transform: translateY(-2px); }
+
+.kicker {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .8rem 1.4rem; border-radius: 10px; font-weight: 600;
+  font-size: .95rem; transition: all .18s ease; border: 1px solid transparent;
+}
+.btn-primary { background: linear-gradient(135deg,var(--cyan),var(--blue));
+               color: #001015; }
+.btn-primary:hover { filter: brightness(1.12); }
+.btn-ghost { border-color: var(--line); color: var(--fg); }
+.btn-ghost:hover { border-color: var(--fg-faint); background: var(--bg-raise); }
+
+.link-cyan { color: var(--cyan); text-decoration: none; }
+.link-cyan:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Respect the one setting that actually matters for motion. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card-hover { transition: none; }
 }
