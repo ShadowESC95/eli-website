@@ -1,22 +1,39 @@
 @import "tailwindcss";
 
-/* ELI's palette, taken from the mark itself (blueprints/Eli_Icon.png): a deep
-   navy-black canvas with a blue cast — not neutral black — and an electric cyan
-   ring fading to blue. Sampled values: canvas #001015, ring #00fefe -> #00d1fd,
-   wordmark #f8f9f9. The site should look like the icon it sits behind. */
+/* ─────────────────────────────────────────────────────────────────────────────
+   ELI — visual language
+
+   Built out from the product's own UI (api/static/app.css): cyan #22d3ee with a
+   magenta #f637ec counterpoint over near-black blue, layered blooms, a fine grid,
+   glass panels. Extended here with the one idea the site needs and the app does
+   not: the CONTAINMENT RING.
+
+   ELI's mark is a glowing ring. The hero renders it as a field with particles
+   orbiting inside it and none crossing the boundary — which is the entire product
+   argument made visual: it all happens on your machine, nothing leaves. Every
+   motion respects prefers-reduced-motion.
+   ───────────────────────────────────────────────────────────────────────────── */
 :root {
-  --bg:        #00080b;
-  --bg-raise:  #00131a;
-  --bg-card:   #04141b;
-  --line:      #0d2b34;
-  --line-soft: #071e25;
-  --fg:        #f2f6f7;
-  --fg-dim:    #8fa5ab;
-  --fg-faint:  #5e777e;
-  --cyan:      #00fefe;
-  --blue:      #00d1fd;
-  --glow:      rgba(0, 209, 253, .16);
-  --danger:    #ff8a7a;
+  color-scheme: dark;
+  --bg:        #04060c;
+  --bg2:       #070a12;
+  --grid:      rgba(34, 211, 238, .045);
+  --card:      rgba(12, 19, 32, .58);
+  --card2:     rgba(20, 28, 44, .5);
+  --line:      rgba(64, 224, 255, .14);
+  --line-str:  rgba(64, 224, 255, .34);
+  --fg:        #e3edfb;
+  --fg-dim:    #8aa4c8;
+  --mut:       #5b6b86;
+  --accent:    #22d3ee;
+  --accent2:   #f637ec;
+  --violet:    #7c5cff;
+  --press:     #06b6d4;
+  --glow:      0 0 0 1px rgba(34,211,238,.3), 0 0 18px rgba(34,211,238,.2);
+  --shadow:    0 2px 10px rgba(0,0,0,.5), 0 18px 54px rgba(0,0,0,.45);
+  --radius:    16px;
+  --fast:      .2s cubic-bezier(.4,0,.2,1);
+  --mono:      var(--font-geist-mono), ui-monospace, "JetBrains Mono", Menlo, monospace;
 }
 
 @theme inline {
@@ -27,67 +44,142 @@
 }
 
 * { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
-  -webkit-font-smoothing: antialiased;
+  margin: 0; color: var(--fg); -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(1200px 620px at 78% -14%, rgba(34,211,238,.11), transparent 62%),
+    radial-gradient(1000px 560px at -14% 106%, rgba(246,55,236,.075), transparent 62%),
+    radial-gradient(760px 420px at 50% 42%, rgba(124,92,255,.05), transparent 70%),
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0/34px 34px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/34px 34px,
+    var(--bg);
+  background-attachment: fixed;
 }
 
-/* Hero backdrop: a faint grid that fades out, plus one warm bloom. Cheap, static,
-   no images, and it stops the page reading as a blank sheet. */
-.hero-bg {
-  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
-}
-.hero-bg::before {
-  content: ""; position: absolute; inset: -1px;
-  background-image:
-    linear-gradient(to right, var(--line-soft) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line-soft) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
-}
-.hero-bg::after {
-  content: ""; position: absolute; left: 50%; top: -280px;
-  width: 900px; height: 560px; transform: translateX(-50%);
-  background: radial-gradient(ellipse at center, var(--glow), transparent 68%);
-  filter: blur(30px);
+/* Film grain. Kills the flat-vector look that reads as a slide deck. */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  opacity: .035; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.rule { border-top: 1px solid var(--line); }
+/* ── the containment ring ───────────────────────────────────────────────────── */
+.field { position: relative; width: min(520px, 88vw); aspect-ratio: 1; }
+.field__ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid rgba(34,211,238,.34);
+  box-shadow:
+    0 0 60px rgba(34,211,238,.22),
+    inset 0 0 90px rgba(34,211,238,.09);
+}
+.field__ring::after {
+  content: ""; position: absolute; inset: -1px; border-radius: 50%;
+  background: conic-gradient(from 0deg,
+    transparent 0deg, rgba(34,211,238,.85) 24deg, transparent 70deg,
+    transparent 180deg, rgba(246,55,236,.6) 204deg, transparent 250deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  animation: sweep 9s linear infinite;
+}
+.field__ring--inner {
+  inset: 13%; border-color: rgba(124,92,255,.22);
+  box-shadow: inset 0 0 60px rgba(124,92,255,.08);
+}
+.field__ring--inner::after { animation-direction: reverse; animation-duration: 14s; }
+.field__core {
+  position: absolute; inset: 34%; border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, rgba(120,240,255,.5), rgba(34,211,238,.14) 46%, transparent 70%);
+  filter: blur(6px); animation: breathe 6s ease-in-out infinite;
+}
+/* Particles orbit INSIDE the ring. None cross it — that is the point. */
+.orbit { position: absolute; inset: 0; animation: spin var(--dur, 20s) linear infinite; }
+.orbit > i {
+  position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--c, var(--accent));
+  box-shadow: 0 0 10px var(--c, var(--accent));
+  transform: rotate(var(--a, 0deg)) translateX(var(--r, 120px));
+}
+@keyframes sweep   { to { transform: rotate(360deg); } }
+@keyframes spin    { to { transform: rotate(360deg); } }
+@keyframes breathe { 0%,100% { opacity:.75; transform:scale(1);} 50% { opacity:1; transform:scale(1.07);} }
 
+/* ── surfaces ───────────────────────────────────────────────────────────────── */
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-radius: 14px;
+  position: relative; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px); box-shadow: var(--shadow);
+  transition: var(--fast);
 }
-.card-hover { transition: border-color .18s ease, transform .18s ease; }
-.card-hover:hover { border-color: var(--blue); transform: translateY(-2px); }
+.card-hover:hover {
+  border-color: var(--line-str); transform: translateY(-4px);
+  box-shadow: var(--shadow), var(--glow);
+}
+/* A light that tracks the top edge on hover — cheap, and it makes a grid of
+   panels feel like hardware rather than boxes. */
+.card-hover::before {
+  content: ""; position: absolute; inset-inline: 18%; top: -1px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0; transition: var(--fast);
+}
+.card-hover:hover::before { opacity: 1; }
+
+.rule-fade { height:1px; border:0;
+  background: linear-gradient(90deg, transparent, var(--line-str), transparent); }
 
 .kicker {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--cyan);
+  font-family: var(--mono); font-size: .7rem; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--accent);
+  text-shadow: 0 0 14px rgba(34,211,238,.5);
+}
+.kicker--bar { display:inline-flex; align-items:center; gap:.7rem; }
+.kicker--bar::before {
+  content:""; width:26px; height:1px; background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
 }
 
-.btn {
-  display: inline-flex; align-items: center; gap: .5rem;
-  padding: .8rem 1.4rem; border-radius: 10px; font-weight: 600;
-  font-size: .95rem; transition: all .18s ease; border: 1px solid transparent;
+.display {
+  font-weight: 800; letter-spacing: -.035em; line-height: .96;
+  text-transform: uppercase;
 }
-.btn-primary { background: linear-gradient(135deg,var(--cyan),var(--blue));
-               color: #001015; }
-.btn-primary:hover { filter: brightness(1.12); }
-.btn-ghost { border-color: var(--line); color: var(--fg); }
-.btn-ghost:hover { border-color: var(--fg-faint); background: var(--bg-raise); }
+.grad { background: linear-gradient(100deg, var(--accent), var(--violet) 55%, var(--accent2));
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent; }
+.grad-cyan { background: linear-gradient(135deg, #9df3ff, var(--accent));
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent; }
 
-.link-cyan { color: var(--cyan); text-decoration: none; }
-.link-cyan:hover { text-decoration: underline; text-underline-offset: 3px; }
+.btn { display:inline-flex; align-items:center; gap:.55rem; padding:.85rem 1.6rem;
+  border-radius:12px; font-weight:600; font-size:.95rem; transition:var(--fast);
+  border:1px solid transparent; }
+.btn-primary { background: linear-gradient(135deg, var(--accent), var(--press)); color:#03121a;
+  box-shadow: 0 0 0 1px rgba(34,211,238,.4), 0 0 30px rgba(34,211,238,.34); }
+.btn-primary:hover { filter:brightness(1.1); transform:translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(34,211,238,.65), 0 0 46px rgba(34,211,238,.5); }
+.btn-ghost { border-color:var(--line); color:var(--fg); background:var(--card2); }
+.btn-ghost:hover { border-color:var(--accent); color:var(--accent); box-shadow:var(--glow); }
 
-/* Respect the one setting that actually matters for motion. */
+.chip { font-family:var(--mono); font-weight:700; color:var(--accent);
+  background:rgba(34,211,238,.08); border:1px solid rgba(34,211,238,.28);
+  box-shadow: inset 0 0 14px rgba(34,211,238,.12); }
+.dot-cyan { background:var(--accent); box-shadow:0 0 8px var(--accent); }
+.logo-glow    { filter: drop-shadow(0 0 14px rgba(34,211,238,.6)); }
+.logo-glow-lg { filter: drop-shadow(0 0 40px rgba(34,211,238,.6)); }
+
+/* ── capability ticker ──────────────────────────────────────────────────────── */
+.ticker { overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent); }
+.ticker__track { display:flex; gap:2.5rem; width:max-content; animation: slide 44s linear infinite; }
+.ticker__item { font-family:var(--mono); font-size:.8rem; letter-spacing:.12em;
+  color:var(--mut); white-space:nowrap; text-transform:uppercase; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+a { color: inherit; text-decoration: none; }
+
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .card-hover { transition: none; }
+  html { scroll-behavior:auto; }
+  .field__ring::after, .orbit, .field__core, .ticker__track { animation: none; }
+  .card, .btn { transition: none; }
+  .card-hover:hover, .btn-primary:hover { transform: none; }
 }
