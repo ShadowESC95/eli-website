@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# geteli.tech
 
-## Getting Started
+The website for [ELI](https://github.com/ShadowESC95/ELI_v2.0) — an AI assistant
+that runs entirely on your own machine.
 
-First, run the development server:
+Static Next.js site, exported to plain HTML and published to GitHub Pages by
+`.github/workflows/deploy.yml` on every push to `main`.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npx next build     # static export -> out/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Notes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The palette is sampled from ELI's own mark (`public/eli-icon.png`) rather than
+chosen: canvas `#001015`, ring `#00fefe` → `#00d1fd`, wordmark `#f8f9f9`. The
+canvas is blue-shifted, not neutral black — using true black puts the logo in a
+faintly wrong-coloured hole.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Every figure on the page is checked against the ELI repository (capability counts
+come from `capability_manifest.json`). Please don't add one that can't be
+reproduced from source.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This site was previously deployed from Vercel, whose git integration silently
+stopped firing in January 2026 — no webhook, no deployment, no error anywhere,
+and the live site served a seven-month-old build. The deploy now lives in this
+repo so a failure is visible.
