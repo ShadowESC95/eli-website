@@ -5,8 +5,10 @@ const MARKETPLACE = "https://plugins.geteli.tech";
 const RELEASES = "https://github.com/ShadowESC95/ELI_v2.0/releases/latest";
 const REPO = "https://github.com/ShadowESC95/ELI_v2.0";
 
-/* Every figure here is checked against the repository: 223 capabilities with 181
-   routable (capability_manifest.json), 166 voices across 45 languages, and the
+/* Every figure here is checked against the repository: 223 capabilities with 206
+   routable — the project's own published definition (routable OR
+   in_supported_list, per capabilities_doc.py); the raw `routable` field alone
+   counts 181, and quoting that contradicted ELI's generated reference. 166 voices across 45 languages, and the
    release pipeline builds .exe, .dmg and AppImage. */
 
 /* The hero visual: ELI's mark is a ring, so the field is a ring with particles
@@ -88,7 +90,7 @@ function Hero() {
 
         <dl className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8">
           {[
-            ["223", "capabilities · 181 routable"],
+            ["223", "capabilities · 206 routable"],
             ["166", "voices · 45 languages"],
             ["0", "bytes sent anywhere"],
             ["3", "platforms · one installer"],
