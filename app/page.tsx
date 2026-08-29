@@ -352,7 +352,7 @@ function Specs() {
   const rows: [string, string][] = [
     ["Platforms", "Windows (.exe), macOS (.dmg), Linux (AppImage)"],
     ["Models", "Any GGUF model, loaded locally. Ollama supported."],
-    ["Acceleration", "NVIDIA (CUDA), AMD (ROCm), Intel Arc, or CPU only"],
+    ["Acceleration", "NVIDIA (CUDA), AMD (Vulkan or ROCm), Intel Arc (Vulkan), or CPU only"],
     ["Fine-tuning", "LoRA / QLoRA with 4-bit quantisation, on your own GPU"],
     ["Storage", "Local SQLite plus a FAISS vector index"],
     ["Network", "Offline by default; every route gated at one chokepoint"],
@@ -394,7 +394,7 @@ function Download() {
           Run it <span className="grad">yourself.</span>
         </h2>
         <p className="mt-8 text-[color:var(--fg-dim)] max-w-xl mx-auto leading-relaxed">
-          One installer for Windows, macOS and Linux. It brings its own voices and
+          Platform-specific installers for Windows, macOS and Linux. It brings its own voices and
           everything else it needs &mdash; point it at a model and it starts.
         </p>
         <div className="mt-11 flex flex-wrap gap-3 justify-center">
