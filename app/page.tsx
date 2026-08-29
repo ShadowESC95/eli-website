@@ -5,11 +5,10 @@ const MARKETPLACE = "https://plugins.geteli.tech";
 const RELEASES = "https://github.com/ShadowESC95/ELI_v2.0/releases/latest";
 const REPO = "https://github.com/ShadowESC95/ELI_v2.0";
 
-/* Every figure here is checked against the repository: 223 capabilities with 206
-   routable — the project's own published definition (routable OR
-   in_supported_list, per capabilities_doc.py); the raw `routable` field alone
-   counts 181, and quoting that contradicted ELI's generated reference. 166 voices across 45 languages, and the
-   release pipeline builds .exe, .dmg and AppImage. */
+/* Every figure here is checked against the ELI v2 repository: 225 capabilities with 208
+   doc-routable — routable OR in_supported_list (per capabilities_doc.py); the raw
+   `routable` field alone counts 184. 166 voices across 45 languages; release pipeline
+   builds .exe, .dmg, and AppImage per platform. */
 
 /* The hero visual: ELI's mark is a ring, so the field is a ring with particles
    orbiting INSIDE it and none crossing the boundary. It is the product argument
@@ -74,7 +73,7 @@ function Hero() {
             </h1>
             <p className="mt-8 text-lg text-[color:var(--fg-dim)] max-w-xl leading-relaxed">
               ELI sees your screen, hears you, speaks back, remembers what you told
-              it weeks ago, and does 223 different things on your behalf &mdash;
+              it weeks ago, and does 225 different things on your behalf &mdash;
               running entirely on hardware you own. No account. No subscription.
               No telemetry.
             </p>
@@ -90,10 +89,10 @@ function Hero() {
 
         <dl className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8">
           {[
-            ["223", "capabilities · 206 routable"],
+            ["225", "capabilities · 208 routable"],
             ["166", "voices · 45 languages"],
             ["0", "bytes sent anywhere"],
-            ["3", "platforms · one installer"],
+            ["3", "platforms · three installers"],
           ].map(([n, label]) => (
             <div key={label}>
               <dt className="text-5xl font-extrabold tracking-tighter grad-cyan">{n}</dt>
@@ -179,7 +178,7 @@ function What() {
             duplicates fold together, and facts you mention in passing are promoted
             into a knowledge graph.
           </Cell>
-          <Cell kicker="Action" title="223 things it can actually do" span="lg:col-span-2">
+          <Cell kicker="Action" title="225 things it can actually do" span="lg:col-span-2">
             Open and drive applications, control media, manage files, write and debug
             code, search the web when you allow it, watch for events and act on them,
             and run scheduled work overnight while you sleep.
@@ -255,7 +254,7 @@ function How() {
               run in parallel where they help.
             </Step>
             <Step n="04" title="Act">
-              One of 223 capabilities runs &mdash; opening an app, editing a file,
+              One of 225 capabilities runs &mdash; opening an app, editing a file,
               calling an MCP tool, scheduling work for tonight.
             </Step>
             <Step n="05" title="Verify">

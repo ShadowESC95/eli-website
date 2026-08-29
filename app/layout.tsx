@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://geteli.tech"),
   title: "ELI — the assistant that runs on your machine",
   description:
-    "A complete AI assistant that runs entirely on your own hardware. Voice, vision, memory and 223 capabilities — offline by default, with no account and no telemetry.",
+    "A complete AI assistant that runs entirely on your own hardware. Voice, vision, memory and 225 capabilities — offline by default, with no account and no telemetry.",
   keywords: [
     "local AI", "offline AI assistant", "private AI", "on-device AI",
     "self-hosted assistant", "ELI",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ELI — the assistant that runs on your machine",
     description:
-      "Voice, vision, memory and 223 capabilities, running entirely on your own hardware. Offline by default.",
+      "Voice, vision, memory and 225 capabilities, running entirely on your own hardware. Offline by default.",
     url: "https://geteli.tech",
     siteName: "ELI",
     type: "website",
